@@ -1,0 +1,34 @@
+Look at the grammar.
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+What changes to the grammar alone could improve the parsing (in particular, consider coordinated conjunctions)?
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+We can see that there is no coordinated conjunctions in our grammar. The modification we can make in our grammar file will be by adding some coordinated conjunctions in order to parse more sentences with several subject for instance, Mike and I drive to Chicago. 
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Modify the grammar somewhat and evaluate the improvements. What new sentences may be parsed? What invalid sentences are now parsed (if any)?
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+We decide to implement in the simple.gr the following rules in order to take into account some coordinated conjunctions : 
+
+0	np	np conj np
+0	vp	vp conj vp
+0	s	s conj s
+0	conj	and
+0	conj	for
+0	conj	nor
+0	conj	so
+0	conj	but
+0	conj	or
+0	conj	yet
+0	conj	so
+0	nbar	fname
+
+Example of parsing with new coordinated conjunctions : 
+
+[ s[ np[ np[ fname[ john] ]][ conj[ and] ][ np[ fpron[ i] ]]][ vp[ vbar[ fv[ drive] ]][ vbar-mods[ pp[ fp[ to] ][ np[ nbar[ fname[ chicago] ]]]]]]]
+
+[ s[ np[ np[ fname[ john] ]][ conj[ and] ][ np[ fd[ a] ][ nbar[ fn[ watermelon] ]]]][ vp[ vbar[ fv[ drive] ]][ vbar-mods[ pp[ fp[ to] ][ np[ fd[ the] ][ nbar[ fname[ planet] ]]]]]]]
+
+[ s[ np[ np[ fname[ john] ]][ conj[ and] ][ np[ fpron[ i] ]]][ vp[ vbar[ fv[ drive] ]][ vbar-mods[ pp[ fp[ to] ][ np[ nbar[ fname[ chicago] ]]]][ vbar-mods[ pp[ fp[ in] ][ np[ fd[ this] ][ nbar[ fname[ planet] ]]]]]]]]

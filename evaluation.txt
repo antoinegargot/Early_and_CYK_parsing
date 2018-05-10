@@ -1,0 +1,20 @@
+Evaluate the parser in its current form
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+What sorts of sentences can it parse?
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+The current parser can parse each sentence that contain vocabulary in the selected lexicon (one part of the PCFG rule which contain the words, for instance,  0.1 fv -> « steal »). If we try to parse a sentence which contains words that are not present in this lexicon part of the grammar, the parse process will fail. In addition, if the current word that you are using is present in the lexicon but non of the parsing will end with a possible sentence, the parse will not be able to entirely parse your input. For instance, we can try to parse the word chicago only, the parser will try to find a final grammar rule which will end to a sentence, however by using this word only the parser will not be able to find any parsing solution. In this particular case the parsing will fail too.
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+What types of sentences will it fail to parse?
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+As we said previously, the parser will not be able to parse words which are not in the lexicon part of the grammar or sentence for which the parser will not be able to find an final solution (grammar rule which fit and has a S as a root).
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+What improvements to the grammar or parser are required to properly parse common failed sentences? 
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+One first attempt, will be by creating new grammar rules in our grammar in order to parse more possible sentence. The additional solution will be by adding more words to our lexicon. One interesting way of increasing our lexicon will be by using a complete part of speech tagging and create a new lexicon rule when the algorithm sees a new word for the parsing. The main issue with this kind of solution is finding the probability of each new rules and recompute every rules probability in order to respect the PCFG principle (corresponding rules have to sum to 1).
+

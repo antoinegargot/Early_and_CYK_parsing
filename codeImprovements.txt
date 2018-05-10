@@ -1,0 +1,17 @@
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+In order to create trees we modified some functions :
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+Grammar.parsemodified params rules which is the final rules for our treemodified return root, which is the new root of the tree with its childrenIn this function, we changed the end of it in order to return the correct root if the parse was possible (take if the root’s left part is the sentence tag) 
+
+
+Grammar.attachmodified params r and q in order to link them with the parent children relationmodified return r, it now returns the node with an edited children parameterWe changed this function in order to link children and parent for our final tree, we also take care to avoid null pointer exception when a the node had no children
+
+
+Production.spawnmodified params children in order to init all child as a blank Production (not the index n only) modified return p with new empty childrenWe changed this function in order to create a list of simple production in children for our current production.
+
+
+Production.recursivePrintmodified params node and children recursively in order to print their left partThis function helped us to print the tree by calling children of each node thank to a recursion algorithm. 
+
+
+—> CHECK probImprovements document for the question 4

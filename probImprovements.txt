@@ -1,0 +1,50 @@
+Modify the code to implement a version of probabilistic parsing for the Earley algorithm using a similar method as that discussed in class for the CYK algorithm. Each dotted rule will have a probability (log-probability) that is the product (sum) of the rule's probability (log-probability) with the probabilities (log-probabilities) of all the completed children it covers so far. Test the system using a probabilized version of simple.gr (see "prob-simple.gr").
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+For this part, we computed the probability of each potential child of a node in order to chose the one with the best probability. This part of the work is done in the attach function of the Grammar class. 
+The probability of a specific branch is computed by using the sum of log probability of its children recursively. The probability of the potential child is compare to the existent one in order to select the best branch. 
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Example of score computation 
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+he drives to chicago : 
+
+
+[ s[ np[ fpron[ he] ]][ vp[ vbar[ fv[ drives] ]][ vbar-mods[ pp[ fp[ to] ][ np[ fname[ chicago] ]]]]]]
+CYK score of the tree = 14.719379
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+he steals this watermelon :
+
+[ s[ np[ fpron[ he] ]][ vp[ vbar[ vbar[ fv[ steals] ]][ np[ fd[ this] ][ nbar[ fn[ watermelon] ]]]]]]
+CYK score of the tree = 14.788372
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+she gives watermelon to the aliens :
+
+[ s[ np[ fpron[ she] ]][ vp[ vbar[ vbar[ fv[ gives] ]][ np[ nbar[ fn[ watermelon] ][ nbar-mods[ pp[ fp[ to] ][ np[ fd[ the] ][ nbar[ fn[ aliens] ]]]]]]][ pp[ fp[ to] ][ np[ fd[ the] ][ nbar[ fn[ aliens] ]]]]]]]
+CYK score of the tree = 25.977476
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+We can see that in the last example, the result of the CYK algorithm gave us a different result as expected because one potential child had a better probability than the original one for a specific grammar rule. 
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Write a couple of ideas of how you might improve the system yet further.––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+Problems with PCFG :
+The probability makes rigid independence assumptions due to lake of context and lack of lexical information.There are different ways to improve a PCFG :— First we can work on splitting Non-Terminals, for instance the issue is that NP in subject position tend to be pronouns, NP in a object position tend to have a full lexical form. In this case, we can slit all NP non-terminal rules into two different rules, for instance NP^S Pron and NP^VP-> Pron for object and subject (it is a way to capture subject/object asymmetry for our parsing). Following this rule, we can annotate VP rules as VP^S for subject if it is the root of a NP noted as NP^VP, called parent annotation. The main issue of it this solution is that we will increase the number of rules in the grammar.— Secondly, we can consider that different kinds of adverbs tend to occur in different syntactic positions. For instance, the most common adverbs with ADVP are also and now, with VP is not. So we can transform some tags in the grammar as RB^ADVP, RB^VP ...Here is a complete successive parameterization of PCFG :––– Simple PCFG––– PCFG + dependencies––– Dependencies + direction––– Dependencies + direction + relations––– Dependencies + direction + relations + subcategorization Dependencies + direction + relations + subcategorization + distance Dependencies + direction + relations + subcategorization + distance + parts-of-speech
+
+
+
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Code improvement for the probability
+––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+Production.spawnmodified params children in order to init all child as a blank Production (not the index n only) modified return p with new empty childrenWe changed this function in order to compare the probability of a potential child compare to the current one of the node.
+
+Production.recursiveLogComputationparams node and children recursively in order to compute their log probabilities.This function help us to compute the logsum score of a specific node based on the score of its children recursively. 
+

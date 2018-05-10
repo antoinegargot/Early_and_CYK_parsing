@@ -1,0 +1,22 @@
+0	ROOT	s
+0	s	np vp
+0	vp	v np
+0	np	det n
+0	np	pn
+0	det	the
+0	n	man
+0	v	saw
+0	pn	her
+0	CONJ    for
+0	CONJ    and
+0	CONJ    nor
+0	CONJ    but
+0	CONJ    or
+0	CONJ    yet
+0	CONJ    so
+0   CONJN   CONJ np
+0   CONJS   CONJ s
+0   CONJVP  CONJ vp
+0   vp  vp CONJVP
+0   s   s CONJS
+0   np  np CONJN
